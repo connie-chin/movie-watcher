@@ -33,6 +33,65 @@ app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello, World!' });
 });
 
+app.get('/api/reviews', async (req, res, next) => {
+  try {
+    const sql = `
+    select *
+    from "reviews"
+    order by "reviewId";`;
+    const result = await db.query(sql);
+    res.json(result.rows);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get('/api/reviews/:reviewId', async (req, res, next) => {
+  try {
+    const { reviewId } = req.params;
+    if (!reviewId || !Number.isInteger(+reviewId)) {
+      throw new ClientError(400, 'reviewId required');
+    }
+    const sql = `
+    select * from "reviews"
+        where "reviewId" = $1
+        returning *;
+    `;
+    const params = [reviewId];
+    const result = await db.query(sql, params);
+    const review = result.rows[0];
+    if (!review) {
+      throw new Error(`entryId ${reviewId} not found`);
+    }
+    res.json(review);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.post('/api/reviews', async (req, res, next) => {
+  const userId = 1;
+  try {
+    const { title, review, rating, photoUrl } = req.body;
+    const sql = `
+    insert into "reviews" ("title", "review", "rating", "photoUrl", "userId")
+    values ($1, $2, $3, $4, $5)
+    returning *;`;
+    if (!title || !review || !rating || !photoUrl) {
+      throw new ClientError(
+        400,
+        'please enter title, review, rating, and photoUrl'
+      );
+    }
+    const params = [title, review, rating, photoUrl, userId];
+    const result = await db.query(sql, params);
+    const [newReview] = result.rows;
+    res.status(201).json(newReview);
+  } catch (err) {
+    next(err);
+  }
+});
+
 /*
  * Middleware that handles paths that aren't handled by static middleware
  * or API route handlers.
