@@ -51,10 +51,10 @@ export function MovieReviewEntryForm() {
           />
         </div>
         <div className="columns-1 flex justify-center w-full text-4xl text-white pb-2 stars">
-          {[...Array(5)].map((star, index) => {
+          {[0, 1, 2, 3, 4, 5].map((star, index) => {
             const currentRating = index + 1;
             return (
-              <label key={index}>
+              <label key={star}>
                 <input
                   className="hidden"
                   type="radio"
