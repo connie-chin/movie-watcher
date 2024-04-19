@@ -1,22 +1,23 @@
 import { FaStar } from 'react-icons/fa';
 import { MovieReview, addReview } from '../data';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FormEvent, useState } from 'react';
 
-export function MovieReviewEntryForm() {
+export function ReviewEntryForm() {
   const { reviewId } = useParams();
-  // const [review, setReview] = useState<MovieReview>();
   const [photoUrl, setPhotoUrl] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>();
   const [starIndex, setStarIndex] = useState(0);
+  const navigate = useNavigate();
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const newReview = Object.fromEntries(formData) as unknown as MovieReview;
-    addReview(newReview);
     console.log('saved new entry');
+    addReview(newReview);
+    navigate('/');
     setIsLoading(false);
     setError(false);
   }
@@ -50,8 +51,31 @@ export function MovieReviewEntryForm() {
             className="h-auto max-w-full"
           />
         </div>
+        <div className="columns-1 flex w-full block justify-center pb-2">
+          <label>
+            PhotoUrl
+            <input
+              name="photoUrl"
+              type="text"
+              required
+              className="border-red-900 block px-2 rounded"
+              onChange={(event) => setPhotoUrl(event.target.value)}
+            />
+          </label>
+        </div>
+        <div className="columns-1 flex w-full block justify-center pb-2">
+          <label className="justify-items-start">
+            Title
+            <input
+              name="title"
+              type="text"
+              required
+              className="border-red-900 block px-2 rounded"
+            />
+          </label>
+        </div>
         <div className="columns-1 flex justify-center w-full text-4xl text-white pb-2 stars">
-          {[0, 1, 2, 3, 4, 5].map((star, index) => {
+          {[1, 2, 3, 4, 5].map((star, index) => {
             const currentRating = index + 1;
             return (
               <label key={star}>
@@ -71,29 +95,7 @@ export function MovieReviewEntryForm() {
             );
           })}
         </div>
-        <div className="columns-1 flex w-full block justify-center pb-2">
-          <label className="justify-items-start">
-            Title
-            <input
-              name="title"
-              type="text"
-              required
-              className="border-red-900 block px-2 rounded"
-            />
-          </label>
-        </div>
-        <div className="columns-1 flex w-full block justify-center pb-2">
-          <label>
-            PhotoUrl
-            <input
-              name="photoUrl"
-              type="text"
-              required
-              className="border-red-900 block px-2 rounded"
-              onChange={(event) => setPhotoUrl(event.target.value)}
-            />
-          </label>
-        </div>
+
         <div className="columns-1 flex w-full block justify-center pb-7">
           <label>
             Add review...

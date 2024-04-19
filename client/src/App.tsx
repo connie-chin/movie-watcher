@@ -1,21 +1,18 @@
 import './App.css';
 import { NavBar } from './components/NavBar';
-import { MovieReviewEntryForm } from './pages/MovieReviewEntryForm';
+import { ReviewEntryForm } from './pages/ReviewEntryForm';
+import { ReviewEntryList } from './pages/ReviewEntryList';
+import { Routes, Route } from 'react-router-dom';
 
 export default function App() {
   return (
     <>
-      {/* <header className="bg-red-800">
-        <div className="container">
-          <div className="row">
-            <div className="column-full d-flex align-center">
-              <h1 className="text-yellow-400">Movie Watcher</h1>
-            </div>
-          </div>
-        </div>
-      </header> */}
-      <NavBar />
-      <MovieReviewEntryForm />
+      <Routes>
+        <Route path="/" element={<NavBar />}>
+          <Route index element={<ReviewEntryList />} />
+          <Route path="review" element={<ReviewEntryForm />} />
+        </Route>
+      </Routes>
     </>
   );
 }
