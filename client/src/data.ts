@@ -40,3 +40,18 @@ export async function addReview(review: MovieReview): Promise<MovieReview> {
   const newReview = await response.json();
   return newReview;
 }
+
+export async function updateReview(review: MovieReview) {
+  //updating review
+  const req = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(review),
+  };
+  const response = await fetch(`/api/reviews/${review.reviewId}`, req);
+  if (!response.ok) {
+    throw new Error(`fetch error ${response.status}`);
+  }
+  const updatedReview = await response.json();
+  return updatedReview;
+}

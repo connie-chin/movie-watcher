@@ -38,7 +38,7 @@ export function ReviewEntryList() {
           <h2 className="text-left text-2xl">Reviews</h2>
           <h3>
             <Link
-              to="/review"
+              to="/details/new"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded review-link">
               +
             </Link>
@@ -70,7 +70,9 @@ function ReviewCard({ review }: ReviewProps) {
   }
   return (
     <li>
-      <div className="columns-2 gap-8 mb-4 flex flex-row">
+      <Link
+        to={`details/${review.reviewId}`}
+        className="columns-2 gap-8 mb-4 flex flex-row border-red-500 border-2">
         <div className="basis-1/2">
           <img
             className="rounded object-contain block ml-auto mr-auto aspect-auto"
@@ -91,7 +93,7 @@ function ReviewCard({ review }: ReviewProps) {
             <p>{review.review}</p>
           </div>
         </div>
-      </div>
+      </Link>
     </li>
   );
 }

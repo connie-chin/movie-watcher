@@ -1,7 +1,7 @@
 import { FaStar } from 'react-icons/fa';
-import { MovieReview, addReview } from '../data';
+import { MovieReview, addReview, updateReview, readReview } from '../data';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useEffect } from 'react';
 
 export function ReviewEntryForm() {
   const { reviewId } = useParams();
@@ -10,21 +10,41 @@ export function ReviewEntryForm() {
   const [error, setError] = useState<unknown>();
   const [starIndex, setStarIndex] = useState(0);
   const navigate = useNavigate();
+  const [review, setReview] = useState<MovieReview>();
+  const isEditing = reviewId && reviewId !== 'new';
+
+  useEffect(() => {
+    async function load(id: number) {
+      setIsLoading(true);
+      try {
+        const review = await readReview(id);
+        if (!review) throw new Error(`Entry with ID ${id} not found`);
+        setReview(review);
+        setPhotoUrl(review.photoUrl);
+        setStarIndex(Number(review.rating));
+      } catch (err) {
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    if (isEditing) load(Number(reviewId));
+  }, [reviewId]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const newReview = Object.fromEntries(formData) as unknown as MovieReview;
-    console.log('saved new entry');
-    addReview(newReview);
+    if (isEditing) {
+      updateReview({ ...review, ...newReview });
+    } else {
+      addReview(newReview);
+    }
     navigate('/');
-    setIsLoading(false);
-    setError(false);
   }
 
   function handleStarClick(currentRating: number) {
     setStarIndex(currentRating);
-    console.log(currentRating);
   }
 
   if (isLoading) return <div>Loading...</div>;
@@ -41,7 +61,7 @@ export function ReviewEntryForm() {
     <div className="container bg-yellow-400">
       <div className="row">
         <div className="columns-1 flex justify-between w-full text-2xl">
-          <h2>New Review</h2>
+          <h2>{isEditing ? 'Edit Review' : 'New Review'}</h2>
         </div>
       </div>
       <form onSubmit={handleSubmit}>
@@ -58,6 +78,7 @@ export function ReviewEntryForm() {
               name="photoUrl"
               type="text"
               required
+              defaultValue={review?.photoUrl ?? ''}
               className="border-red-900 block px-2 rounded"
               onChange={(event) => setPhotoUrl(event.target.value)}
             />
@@ -70,6 +91,7 @@ export function ReviewEntryForm() {
               name="title"
               type="text"
               required
+              defaultValue={review?.title ?? ''}
               className="border-red-900 block px-2 rounded"
             />
           </label>
@@ -95,13 +117,13 @@ export function ReviewEntryForm() {
             );
           })}
         </div>
-
         <div className="columns-1 flex w-full block justify-center pb-7">
           <label>
             Add review...
             <textarea
               name="review"
               required
+              defaultValue={review?.review ?? ''}
               className="border-red-900 block px-2 rounded"
               cols={30}
               rows={10}
