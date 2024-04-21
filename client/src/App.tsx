@@ -10,7 +10,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<NavBar />}>
           <Route index element={<ReviewEntryList />} />
-          <Route path="review" element={<ReviewEntryForm />} />
+          <Route path="details/:reviewId" element={<ReviewEntryForm />} />
         </Route>
       </Routes>
     </>
