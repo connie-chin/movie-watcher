@@ -42,8 +42,8 @@ export function ReviewEntryList() {
           </Link>
         </div>
       </div>
-      <div className="row">
-        <div className="columns-1 px-3 py-0">
+      <div className="row flex justify-center">
+        <div className="w-5/6 md:w-4/5 lg:w-3/4px-3 py-0">
           <ul className="review-entry-ul">
             {reviewsList.map((review) => (
               <ReviewCard key={review.reviewId} review={review} />
@@ -72,7 +72,7 @@ function ReviewCard({ review }: ReviewProps) {
         className="columns-2 gap-4 mb-4 flex flex-row rounded p-2 bg-white max-h-80">
         <div className="basis-1/3">
           <img
-            className="rounded object-contain block ml-auto mr-auto aspect-auto h-"
+            className="rounded object-contain block ml-auto mr-auto aspect-auto "
             src={review.photoUrl}
             alt=""
           />
@@ -86,7 +86,7 @@ function ReviewCard({ review }: ReviewProps) {
               <FaStar key={index} className="text-sky-500 text-2xl my-1" />
             ))}
           </div>
-          <div className="hidden sm:block">
+          <div className="hidden sm:block overflow-clip max-h-48">
             <p>{review.review}</p>
           </div>
         </div>

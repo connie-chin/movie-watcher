@@ -75,17 +75,17 @@ export function ReviewEntryForm() {
     <div className="container bg-yellow-400">
       <div className="row">
         <div className="columns-1 flex justify-between w-full text-2xl">
-          {/* <h2>{isEditing ? 'Edit Review' : 'New Review'}</h2> */}
+          <h2>{isEditing ? 'Edit Review' : 'New Review'}</h2>
         </div>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className="columns-1 flex justify-center w-full mb-4 mt-4">
+        <div className="columns-1 flex justify-center w-full mb-4 mt-4 ">
           <img
-            src={photoUrl || '/images/Movies-icon.png'}
+            src={photoUrl || '/images/missing-image.jpeg'}
             className="h-auto max-w-full rounded"
           />
         </div>
-        <div className="columns-1 flex w-full block justify-center pb-2">
+        <div className="columns-1 flex w-full justify-center pb-2">
           <label>
             PhotoUrl
             <input
@@ -110,7 +110,7 @@ export function ReviewEntryForm() {
             />
           </label>
         </div>
-        <div className="columns-1 flex justify-center w-full text-4xl text-white pb-2 stars">
+        <div className="columns-1 flex justify-center w-full text-4xl text-white my-4">
           {[1, 2, 3, 4, 5].map((star, index) => {
             const currentRating = index + 1;
             return (
@@ -125,7 +125,7 @@ export function ReviewEntryForm() {
                 {starIndex < currentRating ? (
                   <FaStar />
                 ) : (
-                  <FaStar className="my-2 text-sky-500" />
+                  <FaStar className="text-sky-500" />
                 )}
               </label>
             );
@@ -144,18 +144,22 @@ export function ReviewEntryForm() {
             />
           </label>
         </div>
-        <div className="columns-1 flex w-full block justify-between">
-          {isEditing && (
-            <button
-              className="bg-red-600 rounded text-white px-2 m-2"
-              type="button"
-              onClick={() => setIsDeleting(true)}>
-              Delete
+        <div className="columns-2 flex w-full block justify-between">
+          <div className="delete-button-container">
+            {isEditing && (
+              <button
+                className="bg-red-600 rounded text-white px-2 m-2"
+                type="button"
+                onClick={() => setIsDeleting(true)}>
+                Delete
+              </button>
+            )}
+          </div>
+          <div className="save-button-container">
+            <button className="bg-emerald-500 rounded text-white px-2 m-2">
+              Save
             </button>
-          )}
-          <button className="bg-emerald-500 rounded text-white px-2 m-2">
-            Save
-          </button>
+          </div>
         </div>
       </form>
       {isDeleting && (
