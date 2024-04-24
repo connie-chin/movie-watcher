@@ -34,19 +34,16 @@ export function ReviewEntryList() {
   return (
     <div className="container bg-amber-300 min-h-full">
       <div className="row">
-        <div className="columns-1 d-flex mb-6">
-          <h2 className="text-left text-2xl">Reviews</h2>
-          <h3>
-            <Link
-              to="/details/new"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded review-link">
-              +
-            </Link>
-          </h3>
+        <div className="columns-1 d-flex mb-4">
+          <Link
+            to="/review/new"
+            className="bg-blue-500 text-white font-bold py-2 px-4 rounded review-link">
+            <button className="mt-4">+</button>
+          </Link>
         </div>
       </div>
       <div className="row">
-        <div className="columns-1 w-full px-3 py-0">
+        <div className="columns-1 px-3 py-0">
           <ul className="review-entry-ul">
             {reviewsList.map((review) => (
               <ReviewCard key={review.reviewId} review={review} />
@@ -71,16 +68,16 @@ function ReviewCard({ review }: ReviewProps) {
   return (
     <li>
       <Link
-        to={`details/${review.reviewId}`}
-        className="columns-2 gap-8 mb-4 flex flex-row border-red-500 border-2">
-        <div className="basis-1/2">
+        to={`review/${review.reviewId}`}
+        className="columns-2 gap-4 mb-4 flex flex-row rounded p-2 bg-white max-h-80">
+        <div className="basis-1/3">
           <img
-            className="rounded object-contain block ml-auto mr-auto aspect-auto"
+            className="rounded object-contain block ml-auto mr-auto aspect-auto h-"
             src={review.photoUrl}
             alt=""
           />
         </div>
-        <div className="basis-1/2 flex-row text-start">
+        <div className="basis-2/3 flex-row text-start">
           <div className="font-bold text-2xl">
             <h3>{review.title}</h3>
           </div>
@@ -89,7 +86,7 @@ function ReviewCard({ review }: ReviewProps) {
               <FaStar key={index} className="text-sky-500 text-2xl my-1" />
             ))}
           </div>
-          <div>
+          <div className="hidden sm:block">
             <p>{review.review}</p>
           </div>
         </div>
