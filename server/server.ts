@@ -125,6 +125,27 @@ app.put('/api/reviews/:reviewId', async (req, res, next) => {
   }
 });
 
+app.delete('/api/reviews/:reviewId', async (req, res, next) => {
+  try {
+    const reviewId = Number(req.params.reviewId);
+    if (!Number.isInteger(reviewId) || reviewId < 1) {
+      throw new ClientError(400, 'reviewId must be a positive integer');
+    }
+    const sql = `
+    delete from "reviews"
+        where "reviewId" = $1
+        returning *;`;
+    const params = [reviewId];
+    const result = await db.query(sql, params);
+    const deletedReview = result.rows[0];
+    if (!deletedReview)
+      throw new ClientError(404, `reviewId ${reviewId} not found`);
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+});
+
 /*
  * Middleware that handles paths that aren't handled by static middleware
  * or API route handlers.

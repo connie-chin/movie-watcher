@@ -1,7 +1,13 @@
 import { FaStar } from 'react-icons/fa';
-import { MovieReview, addReview, updateReview, readReview } from '../data';
+import {
+  MovieReview,
+  addReview,
+  updateReview,
+  readReview,
+  deleteReview,
+} from '../data';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FormEvent, useState, useEffect } from 'react';
+import { FormEvent, useState, useEffect, useRef } from 'react';
 
 export function ReviewEntryForm() {
   const { reviewId } = useParams();
@@ -12,6 +18,8 @@ export function ReviewEntryForm() {
   const navigate = useNavigate();
   const [review, setReview] = useState<MovieReview>();
   const isEditing = reviewId && reviewId !== 'new';
+  const [isDeleting, setIsDeleting] = useState(false);
+  const modal = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
     async function load(id: number) {
@@ -47,6 +55,12 @@ export function ReviewEntryForm() {
     setStarIndex(currentRating);
   }
 
+  function handleDelete() {
+    if (!review?.reviewId) throw new Error('Should never happen');
+    deleteReview(review.reviewId);
+    navigate('/');
+  }
+
   if (isLoading) return <div>Loading...</div>;
   if (error) {
     return (
@@ -61,14 +75,14 @@ export function ReviewEntryForm() {
     <div className="container bg-yellow-400">
       <div className="row">
         <div className="columns-1 flex justify-between w-full text-2xl">
-          <h2>{isEditing ? 'Edit Review' : 'New Review'}</h2>
+          {/* <h2>{isEditing ? 'Edit Review' : 'New Review'}</h2> */}
         </div>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className="columns-1 flex justify-center w-full mb-2">
+        <div className="columns-1 flex justify-center w-full mb-4 mt-4">
           <img
             src={photoUrl || '/images/Movies-icon.png'}
-            className="h-auto max-w-full"
+            className="h-auto max-w-full rounded"
           />
         </div>
         <div className="columns-1 flex w-full block justify-center pb-2">
@@ -79,7 +93,7 @@ export function ReviewEntryForm() {
               type="text"
               required
               defaultValue={review?.photoUrl ?? ''}
-              className="border-red-900 block px-2 rounded"
+              className="border-red-900 block px-2 py-1 rounded mt-2"
               onChange={(event) => setPhotoUrl(event.target.value)}
             />
           </label>
@@ -92,7 +106,7 @@ export function ReviewEntryForm() {
               type="text"
               required
               defaultValue={review?.title ?? ''}
-              className="border-red-900 block px-2 rounded"
+              className="border-red-900 block px-2 py-1 rounded mt-2"
             />
           </label>
         </div>
@@ -111,7 +125,7 @@ export function ReviewEntryForm() {
                 {starIndex < currentRating ? (
                   <FaStar />
                 ) : (
-                  <FaStar className="text-sky-500" />
+                  <FaStar className="my-2 text-sky-500" />
                 )}
               </label>
             );
@@ -124,18 +138,54 @@ export function ReviewEntryForm() {
               name="review"
               required
               defaultValue={review?.review ?? ''}
-              className="border-red-900 block px-2 rounded"
+              className="border-red-900 block px-2 py-1 rounded mt-2"
               cols={30}
               rows={10}
             />
           </label>
         </div>
-        <div className="columns-1 flex w-full block justify-end">
-          <button className="bg-red-900 rounded text-yellow-400 px-2 m-2">
+        <div className="columns-1 flex w-full block justify-between">
+          {isEditing && (
+            <button
+              className="bg-red-600 rounded text-white px-2 m-2"
+              type="button"
+              onClick={() => setIsDeleting(true)}>
+              Delete
+            </button>
+          )}
+          <button className="bg-emerald-500 rounded text-white px-2 m-2">
             Save
           </button>
         </div>
       </form>
+      {isDeleting && (
+        <div className="w-100vw h-100vh fixed left-0 right-0 top-0 bottom-0 bg-transparent">
+          <dialog
+            ref={modal}
+            className="modal-container flex justify-center fixed left-0 right-0 top-0 bottom-0 items-center border-2 border-black">
+            <div className="row">
+              <div className="columns-1 flex justify-start font-bold text-xl pl-2">
+                <p>Delete</p>
+              </div>
+              <div className="columns-1 flex justify-center w-full bg-white rounded p-2">
+                <p>Are you sure you want to delete this review?</p>
+              </div>
+              <div className="columns-1 flex justify-between w-full px-3">
+                <button
+                  className="modal-button-cancel bg-gray-400 rounded text-white px-2 m-2"
+                  onClick={() => setIsDeleting(false)}>
+                  Cancel
+                </button>
+                <button
+                  className="modal-button-confirm-delete bg-red-600 rounded text-white px-2 m-2"
+                  onClick={handleDelete}>
+                  Delete
+                </button>
+              </div>
+            </div>
+          </dialog>
+        </div>
+      )}
     </div>
   );
 }

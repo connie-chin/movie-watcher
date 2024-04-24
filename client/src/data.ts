@@ -55,3 +55,13 @@ export async function updateReview(review: MovieReview) {
   const updatedReview = await response.json();
   return updatedReview;
 }
+
+export async function deleteReview(reviewId: number): Promise<void> {
+  const req = {
+    method: 'DELETE',
+  };
+  const response = await fetch(`/api/reviews/${reviewId}`, req);
+  if (!response.ok) {
+    throw new Error(`fetch error ${response.status}`);
+  }
+}
