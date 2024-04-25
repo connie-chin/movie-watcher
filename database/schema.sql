@@ -21,4 +21,13 @@ CREATE TABLE "public"."reviews" (
   "createdAt" timestamptz(6) not null default now(),
   "updatedAt" timestamptz(6)
 );
+CREATE TABLE "public"."watchLists" (
+  "watchListId" serial PRIMARY KEY,
+  "title" text not null,
+  "photoUrl" text not null,
+  "userId" integer not null,
+  "createdAt" timestamptz(6) not null default now(),
+  "updatedAt" timestamptz(6)
+);
 ALTER TABLE "public"."reviews" ADD FOREIGN KEY ("userId") REFERENCES "public"."users" ("userId");
+ALTER TABLE "public"."watchLists" ADD FOREIGN KEY ("userId") REFERENCES "public"."users" ("userId");

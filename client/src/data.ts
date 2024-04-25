@@ -6,6 +6,12 @@ export type MovieReview = {
   photoUrl: string;
 };
 
+export type WatchListItem = {
+  watchListId?: number;
+  title: string;
+  photoUrl: string;
+};
+
 export async function readReviews() {
   //reading all review entries
   const response = await fetch('/api/reviews');
@@ -64,4 +70,23 @@ export async function deleteReview(reviewId: number): Promise<void> {
   if (!response.ok) {
     throw new Error(`fetch error ${response.status}`);
   }
+}
+
+//watchList section
+
+export async function addWatchListItem(
+  item: WatchListItem
+): Promise<WatchListItem> {
+  //creating watchlist item
+  const req = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(item),
+  };
+  const response = await fetch('/api/watchLists', req);
+  if (!response.ok) {
+    throw new Error(`fetch error ${response.status}`);
+  }
+  const newWatchListItem = await response.json();
+  return newWatchListItem;
 }

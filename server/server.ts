@@ -146,6 +146,28 @@ app.delete('/api/reviews/:reviewId', async (req, res, next) => {
   }
 });
 
+// watchLists
+
+app.post('/api/watchLists', async (req, res, next) => {
+  const userId = 1;
+  try {
+    const { title, photoUrl } = req.body;
+    const sql = `
+    insert into "watchLists" ("title", "photoUrl", "userId")
+    values ($1, $2, $3)
+    returning *;`;
+    if (!title || !photoUrl) {
+      throw new ClientError(400, 'please enter title and photoUrl');
+    }
+    const params = [title, photoUrl, userId];
+    const result = await db.query(sql, params);
+    const [newWatchList] = result.rows;
+    res.status(201).json(newWatchList);
+  } catch (err) {
+    next(err);
+  }
+});
+
 /*
  * Middleware that handles paths that aren't handled by static middleware
  * or API route handlers.

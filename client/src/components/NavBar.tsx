@@ -27,13 +27,15 @@ export function NavBar({ currentTab, onClick }: Props) {
                 <p>Reviews</p>
               </div>
             </Link>
-            <div
-              className={`rounded border-4 border-yellow-400 p-2 text-yellow-400 ${
-                currentTab === 'Watchlist' ? 'bg-blue-500' : ''
-              }`}
-              onClick={() => onClick('Watchlist')}>
-              <p className="watch-list-link">Watch List</p>
-            </div>
+            <Link to="/watchList">
+              <div
+                className={`rounded border-4 border-yellow-400 p-2 text-yellow-400 ${
+                  currentTab === 'Watchlist' ? 'bg-blue-500' : ''
+                }`}
+                onClick={() => onClick('Watchlist')}>
+                <p className="watch-list-link">Watch List</p>
+              </div>
+            </Link>
           </div>
         </div>
       </header>
