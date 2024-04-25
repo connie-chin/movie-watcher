@@ -32,7 +32,7 @@ export function ReviewEntryList() {
     );
   }
   return (
-    <div className="container bg-amber-300 min-h-full">
+    <div className="container bg-amber-300 h-dvh">
       <div className="row">
         <div className="columns-1 d-flex mb-4">
           <Link
