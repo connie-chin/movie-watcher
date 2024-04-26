@@ -9,18 +9,16 @@ export function NavBar({ currentTab, onClick }: Props) {
   return (
     <>
       <header>
-        <div className="container bg-red-800 py-2 font-mono">
-          <div className="row">
-            <div className="column-full d-flex align-center">
-              <h1 className="text-yellow-400 text-4xl font-bold">
-                Movie Watcher
-              </h1>
-            </div>
+        <div className="bg-red-800 p-4 font-mono">
+          <div className="align-center text-center">
+            <h1 className="text-yellow-400 text-4xl font-bold">
+              Movie Watcher
+            </h1>
           </div>
-          <div className="columns-2 pt-2 gap-2 px-2">
+          <div className="columns-2 pt-2 gap-2 px-2 text-center">
             <Link to="/">
               <div
-                className={`reviews-link rounded d-flex border-yellow-400 border-4 p-2 text-yellow-400 ${
+                className={`rounded border-yellow-400 border-4 p-2 text-yellow-400 ${
                   currentTab === 'Reviews' ? 'bg-blue-500' : ''
                 }`}
                 onClick={() => onClick('Reviews')}>
@@ -33,7 +31,7 @@ export function NavBar({ currentTab, onClick }: Props) {
                   currentTab === 'Watchlist' ? 'bg-blue-500' : ''
                 }`}
                 onClick={() => onClick('Watchlist')}>
-                <p className="watch-list-link">Watch List</p>
+                <p>Watch List</p>
               </div>
             </Link>
           </div>

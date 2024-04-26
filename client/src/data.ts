@@ -90,3 +90,12 @@ export async function addWatchListItem(
   const newWatchListItem = await response.json();
   return newWatchListItem;
 }
+
+export async function readWatchListItems() {
+  const response = await fetch('/api/watchLists');
+  if (!response.ok) {
+    throw new Error(`fetch error ${response.status}`);
+  }
+  const watchListItems = await response.json();
+  return watchListItems;
+}

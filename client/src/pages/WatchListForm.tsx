@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { WatchListItem, addWatchListItem } from '../data';
 import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function WatchListForm() {
   const [photoUrl, setPhotoUrl] = useState('');
   const [title, setTitle] = useState('');
+  const navigate = useNavigate();
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event?.preventDefault();
@@ -12,8 +14,9 @@ export function WatchListForm() {
     const newWatchList = Object.fromEntries(
       formData
     ) as unknown as WatchListItem;
+    console.log('title', title);
     addWatchListItem(newWatchList);
-    console.log('title of added:', title);
+    navigate('/watchList');
   }
 
   return (
