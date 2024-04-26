@@ -37,7 +37,7 @@ export function ReviewEntryForm() {
       }
     }
     if (isEditing) load(Number(reviewId));
-  }, [reviewId]);
+  }, [reviewId, isEditing]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -72,7 +72,7 @@ export function ReviewEntryForm() {
   }
 
   return (
-    <div className="container bg-yellow-400">
+    <div className="bg-yellow-400">
       <div className="row">
         <div className="columns-1 flex justify-between w-full text-2xl">
           <h2>{isEditing ? 'Edit Review' : 'New Review'}</h2>

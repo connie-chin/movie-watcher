@@ -1,22 +1,75 @@
 import { Link } from 'react-router-dom';
-// import { WatchListItem,  } from '../data';
+import { WatchListItem, readWatchListItems } from '../data';
+import { useState, useEffect } from 'react';
 
 export function WatchList() {
+  const [watchList, setWatchList] = useState<WatchListItem[]>([]);
+  const [error, setError] = useState<unknown>();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const watchListList = await readWatchListItems();
+        setWatchList(watchListList);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    load();
+  }, []);
+
+  if (isLoading) return <div>Loading Watch List...</div>;
+  if (error) {
+    return (
+      <div>
+        Error Loading Watch List:{' '}
+        {error instanceof Error ? error.message : 'Unknown error'}
+      </div>
+    );
+  }
+
   return (
-    <div className="container bg-yellow-500 h-dvh">
+    <div className="flex justify-center bg-yellow-500 h-dvh overflow-auto">
       <div className="row-auto">
-        <div className="columns-1 d-flex mb-4">
-          <Link to="/watchList/new">
-            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4">
-              +
-            </button>
+        {/* <div className="row"> */}
+        <div className="columns-1 flex justify-center mb-4">
+          <Link
+            className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4"
+            to="/watchList/new">
+            +
           </Link>
+        </div>
+        {/* </div> */}
+        <div>
+          <ul className="flex flex-wrap w-full justify-start">
+            {watchList.map((item) => (
+              <WatchListCard key={item.watchListId} item={item} />
+            ))}
+          </ul>
         </div>
       </div>
     </div>
   );
 }
 
-// type watchListProps = {
-//   item: WatchListItem;
-// }
+type watchListProps = {
+  item: WatchListItem;
+};
+
+function WatchListCard({ item }: watchListProps) {
+  return (
+    <li className="basis-1/2 lg:basis-1/4 flex justify-center mb-6">
+      <div className="flex-row w-32">
+        <div className="columns-1">
+          <img className="object-contain rounded" src={item.photoUrl} alt="" />
+        </div>
+        <div className="columns-1 text-center">
+          <p>{item.title}</p>
+        </div>
+      </div>
+    </li>
+  );
+}

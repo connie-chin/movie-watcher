@@ -22,7 +22,7 @@ export function ReviewEntryList() {
     load();
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading Reviews...</div>;
   if (error) {
     return (
       <div>
@@ -32,19 +32,19 @@ export function ReviewEntryList() {
     );
   }
   return (
-    <div className="container bg-amber-300 h-dvh">
-      <div className="row">
-        <div className="columns-1 d-flex mb-4">
-          <Link
-            to="/review/new"
-            className="bg-blue-500 text-white font-bold py-2 px-4 rounded review-link">
-            <button className="mt-4">+</button>
-          </Link>
-        </div>
+    <div className="mx-auto bg-amber-300 h-dvh overflow-auto">
+      {/* <div className="row-auto"> */}
+      <div className="columns-1 mb-4 flex justify-center">
+        <Link
+          to="/review/new"
+          className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4">
+          +
+        </Link>
+        {/* </div> */}
       </div>
-      <div className="row flex justify-center">
+      <div className="flex justify-center">
         <div className="w-5/6 md:w-4/5 lg:w-3/4px-3 py-0">
-          <ul className="review-entry-ul">
+          <ul>
             {reviewsList.map((review) => (
               <ReviewCard key={review.reviewId} review={review} />
             ))}
@@ -77,11 +77,11 @@ function ReviewCard({ review }: ReviewProps) {
             alt=""
           />
         </div>
-        <div className="basis-2/3 flex-row text-start">
+        <div className="basis-2/3 text-start">
           <div className="font-bold text-2xl">
             <h3>{review.title}</h3>
           </div>
-          <div className="flex flex-row">
+          <div className="flex">
             {stars.map((index) => (
               <FaStar key={index} className="text-sky-500 text-2xl my-1" />
             ))}

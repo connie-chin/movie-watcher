@@ -168,6 +168,19 @@ app.post('/api/watchLists', async (req, res, next) => {
   }
 });
 
+app.get('/api/watchLists', async (req, res, next) => {
+  try {
+    const sql = `
+    select *
+    from "watchLists"
+    order by "watchListId";`;
+    const result = await db.query(sql);
+    res.json(result.rows);
+  } catch (err) {
+    next(err);
+  }
+});
+
 /*
  * Middleware that handles paths that aren't handled by static middleware
  * or API route handlers.
