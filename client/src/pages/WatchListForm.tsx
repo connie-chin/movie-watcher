@@ -4,8 +4,9 @@ import {
   addWatchListItem,
   updateWatchListItem,
   readWatchListItem,
+  deleteWatchListItem,
 } from '../data';
-import { FormEvent, useEffect } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export function WatchListForm() {
@@ -13,10 +14,11 @@ export function WatchListForm() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>();
-  const [title, setTitle] = useState<string>();
   const [photoUrl, setPhotoUrl] = useState<string>();
   const [watchListItem, setWatchListItem] = useState<WatchListItem>();
   const isEditing = watchListId && watchListId !== 'new';
+  const [isDeleting, setIsDeleting] = useState(false);
+  const modal = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
     async function load(id: number) {
@@ -48,7 +50,13 @@ export function WatchListForm() {
       addWatchListItem(newWatchList);
     }
     navigate('/watchList');
-    console.log('title', title);
+    // console.log('title', title);
+  }
+
+  function handleDelete() {
+    if (!watchListItem?.watchListId) throw new Error('Should never happen');
+    deleteWatchListItem(watchListItem.watchListId);
+    navigate('/watchList');
   }
 
   if (isLoading) return <div>Loading Watch List...</div>;
@@ -102,21 +110,59 @@ export function WatchListForm() {
                     required
                     defaultValue={watchListItem?.title ?? ''}
                     className="block px-2 py-1 rounded mt-2"
-                    onChange={(event) => setTitle(event.target.value)}
                   />
                 </label>
               </div>
             </div>
           </div>
-
-          <div className="flex w-full justify-end">
-            <div className="save-button-watchList">
-              <button className="bg-emerald-500 rounded text-white px-2 m-2 md:mt-20">
-                Save
-              </button>
+          <div className="columns-2 flex w-full block justify-between">
+            <div className="delete-button">
+              {isEditing && (
+                <button
+                  className="bg-red-600 rounded text-white px-2 m-2"
+                  type="button"
+                  onClick={() => setIsDeleting(true)}>
+                  Delete
+                </button>
+              )}
+            </div>
+            <div className="flex w-full justify-end">
+              <div className="save-button-watchList">
+                <button className="bg-emerald-500 rounded text-white px-2 m-2 md:mt-20">
+                  Save
+                </button>
+              </div>
             </div>
           </div>
         </form>
+        {isDeleting && (
+          <div className="w-100vw h-100vh fixed left-0 right-0 top-0 bottom-0 bg-transparent">
+            <dialog
+              ref={modal}
+              className="modal-container flex justify-center fixed left-0 right-0 top-0 bottom-0 items-center border-2 border-black">
+              <div className="row">
+                <div className="columns-1 flex justify-start font-bold text-xl pl-2">
+                  <p>Delete</p>
+                </div>
+                <div className="columns-1 flex justify-center w-full bg-white rounded p-2">
+                  <p>Are you sure you want to delete this review?</p>
+                </div>
+                <div className="columns-1 flex justify-between w-full px-3">
+                  <button
+                    className="modal-button-cancel bg-gray-400 rounded text-white px-2 m-2"
+                    onClick={() => setIsDeleting(false)}>
+                    Cancel
+                  </button>
+                  <button
+                    className="modal-button-confirm-delete bg-red-600 rounded text-white px-2 m-2"
+                    onClick={handleDelete}>
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </dialog>
+          </div>
+        )}
       </div>
     </div>
   );
