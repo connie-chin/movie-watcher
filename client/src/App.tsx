@@ -19,7 +19,7 @@ export default function App() {
           <Route index element={<ReviewEntryList />} />
           <Route path="review/:reviewId" element={<ReviewEntryForm />} />
           <Route path="watchList" element={<WatchList />} />
-          <Route path="watchList/new" element={<WatchListForm />} />
+          <Route path="watchList/:watchListId" element={<WatchListForm />} />
         </Route>
       </Routes>
     </>

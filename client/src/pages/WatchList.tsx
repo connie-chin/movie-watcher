@@ -32,8 +32,8 @@ export function WatchList() {
   }
 
   return (
-    <div className="flex justify-center bg-yellow-500 h-dvh overflow-auto">
-      <div className="row-auto">
+    <div className="flex flex-wrap justify-center bg-yellow-500 h-dvh overflow-auto">
+      <div className="">
         {/* <div className="row"> */}
         <div className="columns-1 flex justify-center mb-4">
           <Link
@@ -43,8 +43,8 @@ export function WatchList() {
           </Link>
         </div>
         {/* </div> */}
-        <div>
-          <ul className="flex flex-wrap w-full justify-start">
+        <div className="w-screen">
+          <ul className="flex flex-wrap w-full gap-4 justify-center">
             {watchList.map((item) => (
               <WatchListCard key={item.watchListId} item={item} />
             ))}
@@ -61,15 +61,21 @@ type watchListProps = {
 
 function WatchListCard({ item }: watchListProps) {
   return (
-    <li className="basis-1/2 lg:basis-1/4 flex justify-center mb-6">
-      <div className="flex-row w-32">
-        <div className="columns-1">
-          <img className="object-contain rounded" src={item.photoUrl} alt="" />
+    <li>
+      <Link to={`/watchList/${item.watchListId}`}>
+        <div className="flex-row w-32 bg-white p-1 rounded">
+          <div className="columns-1">
+            <img
+              className="object-contain rounded"
+              src={item.photoUrl}
+              alt=""
+            />
+          </div>
+          <div className="columns-1 text-center">
+            <p className="capitalize">{item.title}</p>
+          </div>
         </div>
-        <div className="columns-1 text-center">
-          <p>{item.title}</p>
-        </div>
-      </div>
+      </Link>
     </li>
   );
 }

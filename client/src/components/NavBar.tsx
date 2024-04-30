@@ -11,11 +11,11 @@ export function NavBar({ currentTab, onClick }: Props) {
       <header>
         <div className="bg-red-800 p-4 font-mono">
           <div className="align-center text-center">
-            <h1 className="text-yellow-400 text-4xl font-bold">
+            <h1 className="text-yellow-400 text-4xl font-bold underline decoration-dotted decoration-4 decoration-white">
               Movie Watcher
             </h1>
           </div>
-          <div className="columns-2 pt-2 gap-2 px-2 text-center">
+          <div className="columns-2 pt-2 gap-2 px-2 text-center mt-2">
             <Link to="/">
               <div
                 className={`rounded border-yellow-400 border-4 p-2 text-yellow-400 ${

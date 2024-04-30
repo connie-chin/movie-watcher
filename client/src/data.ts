@@ -92,10 +92,35 @@ export async function addWatchListItem(
 }
 
 export async function readWatchListItems() {
+  //read all watch list items
   const response = await fetch('/api/watchLists');
   if (!response.ok) {
     throw new Error(`fetch error ${response.status}`);
   }
   const watchListItems = await response.json();
   return watchListItems;
+}
+
+export async function readWatchListItem(watchListId: number) {
+  const response = await fetch(`/api/watchLists/${watchListId}`);
+  if (!response.ok) {
+    throw new Error(`fetch error ${response.status}`);
+  }
+  const watchListItem = await response.json();
+  return watchListItem;
+}
+
+export async function updateWatchListItem(item: WatchListItem) {
+  //update watch list item
+  const req = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(item),
+  };
+  const response = await fetch(`/api/watchLists/${item.watchListId}`, req);
+  if (!response.ok) {
+    throw new Error(`fetch error ${response.status}`);
+  }
+  const updatedWatchListItem = await response.json();
+  return updatedWatchListItem;
 }

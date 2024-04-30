@@ -7,6 +7,7 @@ import {
   defaultMiddleware,
   errorMiddleware,
 } from './lib/index.js';
+import { error } from 'node:console';
 
 const connectionString =
   process.env.DATABASE_URL ||
@@ -119,7 +120,6 @@ app.put('/api/reviews/:reviewId', async (req, res, next) => {
       throw new ClientError(404, `cannot find review with ${reviewId}`);
     }
     res.json(updatedReview);
-    console.log('in here');
   } catch (err) {
     next(err);
   }
@@ -149,6 +149,7 @@ app.delete('/api/reviews/:reviewId', async (req, res, next) => {
 // watchLists
 
 app.post('/api/watchLists', async (req, res, next) => {
+  // create
   const userId = 1;
   try {
     const { title, photoUrl } = req.body;
@@ -169,6 +170,7 @@ app.post('/api/watchLists', async (req, res, next) => {
 });
 
 app.get('/api/watchLists', async (req, res, next) => {
+  // get all
   try {
     const sql = `
     select *
@@ -176,6 +178,59 @@ app.get('/api/watchLists', async (req, res, next) => {
     order by "watchListId";`;
     const result = await db.query(sql);
     res.json(result.rows);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get('/api/watchLists/:watchListId', async (req, res, next) => {
+  // get one
+  try {
+    const { watchListId } = req.params;
+    if (!watchListId || !Number.isInteger(+watchListId)) {
+      throw new ClientError(400, 'watchListId required');
+    }
+    const sql = `
+    select * from "watchLists"
+          where "watchListId"=$1;`;
+    const params = [watchListId];
+    const result = await db.query(sql, params);
+    const watchListItem = result.rows[0];
+    if (!watchListItem) {
+      throw new Error(`watchListId ${watchListId} not found`);
+    }
+    res.json(watchListItem);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.put('/api/watchLists/:watchListId', async (req, res, next) => {
+  try {
+    const watchListId = Number(req.params.watchListId);
+    if (!Number.isInteger(watchListId) || watchListId < 1) {
+      throw new ClientError(400, 'watchListId must be a positive integer');
+    }
+    const { title, photoUrl } = req.body;
+    if (!title || !photoUrl) {
+      throw new ClientError(400, 'please enter title and photoUrl');
+    }
+    const sql = `
+    update "watchLists"
+          set "title"=$1,
+          "photoUrl"=$2
+  where "watchListId" = $3
+      returning *;`;
+    const params = [title, photoUrl, watchListId];
+    const result = await db.query(sql, params);
+    const [updatedWatchListItem] = result.rows;
+    if (!updatedWatchListItem) {
+      throw new ClientError(
+        404,
+        `cannot find watch list item with ${watchListId}`
+      );
+    }
+    res.json(updatedWatchListItem);
   } catch (err) {
     next(err);
   }
