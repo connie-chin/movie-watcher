@@ -124,3 +124,13 @@ export async function updateWatchListItem(item: WatchListItem) {
   const updatedWatchListItem = await response.json();
   return updatedWatchListItem;
 }
+
+export async function deleteWatchListItem(watchListId: number): Promise<void> {
+  const req = {
+    method: 'DELETE',
+  };
+  const response = await fetch(`/api/watchLists/${watchListId}`, req);
+  if (!response.ok) {
+    throw new Error(`fetch error ${response.status}`);
+  }
+}

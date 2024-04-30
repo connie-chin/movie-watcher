@@ -236,6 +236,27 @@ app.put('/api/watchLists/:watchListId', async (req, res, next) => {
   }
 });
 
+app.delete('/api/watchLists/:watchListId', async (req, res, next) => {
+  try {
+    const watchListId = Number(req.params.watchListId);
+    if (!Number.isInteger(watchListId) || watchListId < 1) {
+      throw new ClientError(400, 'watchListId must be a positive integer');
+    }
+    const sql = `
+    delete from "watchLists"
+          where "watchListId" = $1
+          returning *;`;
+    const params = [watchListId];
+    const result = await db.query(sql, params);
+    const deletedWatchListItem = result.rows[0];
+    if (!deletedWatchListItem)
+      throw new ClientError(404, `watchListId ${watchListId} not found`);
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+});
+
 /*
  * Middleware that handles paths that aren't handled by static middleware
  * or API route handlers.
