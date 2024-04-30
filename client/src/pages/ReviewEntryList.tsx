@@ -43,7 +43,7 @@ export function ReviewEntryList() {
         {/* </div> */}
       </div>
       <div className="flex justify-center">
-        <div className="w-5/6 md:w-4/5 lg:w-3/4px-3 py-0">
+        <div className="columns-2 py-0 m-4">
           <ul>
             {reviewsList.map((review) => (
               <ReviewCard key={review.reviewId} review={review} />
@@ -79,7 +79,7 @@ function ReviewCard({ review }: ReviewProps) {
         </div>
         <div className="basis-2/3 text-start">
           <div className="font-bold text-2xl">
-            <h3>{review.title}</h3>
+            <h3 className="capitalize">{review.title}</h3>
           </div>
           <div className="flex">
             {stars.map((index) => (
