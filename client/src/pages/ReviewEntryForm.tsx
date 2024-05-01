@@ -72,9 +72,9 @@ export function ReviewEntryForm() {
   }
 
   return (
-    <div className="bg-yellow-400 h-dvh w-full flex justify-center">
+    <div className="bg-amber-300 h-dvh w-full flex justify-center">
       <div className="w-5/6">
-        <div className="columns-1 flex justify-between w-full text-2xl">
+        <div className="columns-1 flex justify-between w-full text-2xl mt-8">
           <h2>{isEditing ? 'Edit Review' : 'New Review'}</h2>
         </div>
 
@@ -83,44 +83,44 @@ export function ReviewEntryForm() {
             <div className="columns-1 flex justify-center mb-4 mt-4">
               <img
                 src={photoUrl || '/images/missing-image.jpeg'}
-                className="h-60 w-auto rounded"
+                className="h-60 w-auto rounded md:h-80"
                 alt="movie image"
               />
             </div>
             <div>
-              <div className="columns-1 flex w-full justify-center pb-2">
-                <label>
+              <div className="columns-1 flex w-full justify-center pb-2 md:pt-4">
+                <label className="w-5/6 md:w-full">
                   PhotoUrl:
                   <input
                     name="photoUrl"
                     type="text"
                     required
                     defaultValue={review?.photoUrl ?? ''}
-                    className="border-red-900 block px-2 py-1 rounded mt-2"
+                    className="block px-2 py-1 rounded mt-2 w-full"
                     onChange={(event) => setPhotoUrl(event.target.value)}
                   />
                 </label>
               </div>
               <div className="columns-1 flex w-full block justify-center pb-2">
-                <label className="justify-items-start">
+                <label className="justify-items-start w-5/6 md:w-full">
                   Title:
                   <input
                     name="title"
                     type="text"
                     required
                     defaultValue={review?.title ?? ''}
-                    className="border-red-900 block px-2 py-1 rounded mt-2"
+                    className="border-red-900 block px-2 py-1 rounded mt-2 w-full"
                   />
                 </label>
               </div>
               <div className="columns-1 flex w-full justify-center">
-                <label>
+                <label className="w-5/6 md:w-full">
                   Rating:
-                  <div className="columns-1 flex justify-center w-full text-4xl text-white my-4">
+                  <div className="columns-1 flex justify-center w-full text-4xl text-white my-4 w-full">
                     {[1, 2, 3, 4, 5].map((star, index) => {
                       const currentRating = index + 1;
                       return (
-                        <label key={star}>
+                        <label key={star} className="hover:scale-110">
                           <input
                             className="hidden"
                             type="radio"
@@ -141,16 +141,16 @@ export function ReviewEntryForm() {
               </div>
             </div>
           </div>
-          <div className="columns-1 flex w-full block justify-center pb-7">
-            <label>
+          <div className="columns-1 flex w-full justify-center pb-7 md:mt-10">
+            <label className="w-5/6 md:w-full">
               Add review...
               <textarea
                 name="review"
                 required
                 defaultValue={review?.review ?? ''}
-                className="border-red-900 block px-2 py-1 rounded mt-2"
-                cols={30}
-                rows={9}
+                className="border-red-900 block px-2 py-1 rounded mt-2 w-full"
+                // cols={30}
+                rows={8}
               />
             </label>
           </div>
@@ -158,22 +158,22 @@ export function ReviewEntryForm() {
             <div className="delete-button-container">
               {isEditing && (
                 <button
-                  className="bg-red-600 rounded text-white px-2 m-2"
+                  className="bg-red-600 rounded text-white px-2 m-2 hover:scale-110"
                   type="button"
                   onClick={() => setIsDeleting(true)}>
                   Delete
                 </button>
               )}
             </div>
-            <div className="bg-yellow-400">
-              <button className="bg-emerald-500 rounded text-white px-2 m-2">
+            <div className="bg-amber-300">
+              <button className="bg-emerald-500 rounded text-white px-2 m-2 hover:scale-110">
                 Save
               </button>
             </div>
           </div>
         </form>
         {isDeleting && (
-          <div className="w-100vw h-100vh fixed left-0 right-0 top-0 bottom-0 bg-transparent">
+          <div className="w-100vw h-100vh fixed left-0 right-0 top-0 bottom-0 bg-[rgba(0,0,0,0.5)]">
             <dialog
               ref={modal}
               className="modal-container flex justify-center fixed left-0 right-0 top-0 bottom-0 items-center border-2 border-black">
@@ -186,12 +186,12 @@ export function ReviewEntryForm() {
                 </div>
                 <div className="columns-1 flex justify-between w-full px-3">
                   <button
-                    className="modal-button-cancel bg-gray-400 rounded text-white px-2 m-2"
+                    className="modal-button-cancel bg-gray-400 rounded text-white px-2 m-2 hover:scale-110"
                     onClick={() => setIsDeleting(false)}>
                     Cancel
                   </button>
                   <button
-                    className="modal-button-confirm-delete bg-red-600 rounded text-white px-2 m-2"
+                    className="modal-button-confirm-delete bg-red-600 rounded text-white px-2 m-2 hover:scale-110"
                     onClick={handleDelete}>
                     Delete
                   </button>

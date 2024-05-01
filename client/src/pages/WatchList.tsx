@@ -32,19 +32,19 @@ export function WatchList() {
   }
 
   return (
-    <div className="flex flex-wrap justify-center bg-yellow-500 h-dvh overflow-auto">
+    <div className="flex flex-wrap justify-center bg-amber-300 h-dvh overflow-auto">
       <div className="">
         {/* <div className="row"> */}
         <div className="columns-1 flex justify-center mb-4">
           <Link
-            className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4"
+            className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4 hover:scale-110"
             to="/watchList/new">
             +
           </Link>
         </div>
         {/* </div> */}
-        <div className="w-screen">
-          <ul className="flex flex-wrap w-full gap-4 justify-center">
+        <div className="w-screen p-6 flex">
+          <ul className=" flex flex-wrap w-full gap-4">
             {watchList.map((item) => (
               <WatchListCard key={item.watchListId} item={item} />
             ))}
@@ -63,16 +63,16 @@ function WatchListCard({ item }: watchListProps) {
   return (
     <li>
       <Link to={`/watchList/${item.watchListId}`}>
-        <div className="flex-row w-32 bg-white p-1 rounded">
+        <div className="flex-row w-32 h-56 bg-[rgb(176,212,192)] p-2 rounded hover:scale-110">
           <div className="columns-1">
             <img
-              className="object-contain rounded"
+              className="h-44 object-contain rounded"
               src={item.photoUrl}
               alt=""
             />
           </div>
-          <div className="columns-1 text-center">
-            <p className="capitalize">{item.title}</p>
+          <div className="text-center h-11 block w-28 overflow-y-scroll">
+            <p className="capitalize text-sm">{item.title}</p>
           </div>
         </div>
       </Link>
