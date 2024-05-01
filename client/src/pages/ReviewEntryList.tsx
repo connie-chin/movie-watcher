@@ -37,14 +37,14 @@ export function ReviewEntryList() {
       <div className="columns-1 mb-4 flex justify-center">
         <Link
           to="/review/new"
-          className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4">
+          className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4 hover:scale-110">
           +
         </Link>
         {/* </div> */}
       </div>
       <div className="flex justify-center">
-        <div className="columns-2 py-0 m-4">
-          <ul>
+        <div className="columns-2 gap-x-6 py-0 m-8">
+          <ul className="w-full flex-col">
             {reviewsList.map((review) => (
               <ReviewCard key={review.reviewId} review={review} />
             ))}
@@ -66,28 +66,31 @@ function ReviewCard({ review }: ReviewProps) {
     stars.push(i);
   }
   return (
-    <li>
+    <li className="justify-between hover:scale-105">
       <Link
         to={`review/${review.reviewId}`}
-        className="columns-2 gap-4 mb-4 flex flex-row rounded p-2 bg-white max-h-80">
+        className="columns-2 mb-4 flex flex-row rounded p-2 bg-[rgb(176,212,192)] h-24 sm:h-40 max-h-60">
         <div className="basis-1/3">
           <img
-            className="rounded object-contain block ml-auto mr-auto aspect-auto "
+            className="rounded w-auto object-contain block ml-auto mr-auto aspect-auto h-20 sm:h-36 max-h-48"
             src={review.photoUrl}
             alt=""
           />
         </div>
-        <div className="basis-2/3 text-start">
-          <div className="font-bold text-2xl">
+        <div className="basis-2/3 text-start sm:pl-2">
+          <div className="font-bold text-xl h-7 overflow-y-scroll">
             <h3 className="capitalize">{review.title}</h3>
           </div>
           <div className="flex">
             {stars.map((index) => (
-              <FaStar key={index} className="text-sky-500 text-2xl my-1" />
+              <FaStar
+                key={index}
+                className="text-sky-500 text-lg sm:text-xl my-1"
+              />
             ))}
           </div>
-          <div className="hidden sm:block overflow-clip max-h-48">
-            <p>{review.review}</p>
+          <div className="hidden sm:block overflow-y-scroll h-[60%]">
+            <p className="text-sm">{review.review}</p>
           </div>
         </div>
       </Link>
