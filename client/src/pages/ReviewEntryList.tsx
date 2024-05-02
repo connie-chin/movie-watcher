@@ -33,14 +33,12 @@ export function ReviewEntryList() {
   }
   return (
     <div className="mx-auto bg-amber-300 h-dvh overflow-auto">
-      {/* <div className="row-auto"> */}
       <div className="columns-1 mb-4 flex justify-center">
         <Link
           to="/review/new"
           className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4 hover:scale-110">
           +
         </Link>
-        {/* </div> */}
       </div>
       <div className="flex justify-center">
         <div className="columns-2 gap-x-6 py-0 m-8">
@@ -69,7 +67,7 @@ function ReviewCard({ review }: ReviewProps) {
     <li className="justify-between hover:scale-105">
       <Link
         to={`review/${review.reviewId}`}
-        className="columns-2 mb-4 flex flex-row rounded p-2 bg-[rgb(176,212,192)] h-24 sm:h-40 max-h-60">
+        className="columns-2 mb-4 flex flex-row rounded p-2 bg-[rgb(254,182,166)] h-24 sm:h-40 max-h-60">
         <div className="basis-1/3">
           <img
             className="rounded w-auto object-contain block ml-auto mr-auto aspect-auto h-20 sm:h-36 max-h-48"
