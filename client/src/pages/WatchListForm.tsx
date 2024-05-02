@@ -46,9 +46,9 @@ export function WatchListForm() {
     ) as unknown as WatchListItem;
     try {
       if (isEditing) {
-        updateWatchListItem({ ...watchListItem, ...newWatchList });
+        await updateWatchListItem({ ...watchListItem, ...newWatchList });
       } else {
-        addWatchListItem(newWatchList);
+        await addWatchListItem(newWatchList);
       }
     } catch (err) {
       setError(err);
