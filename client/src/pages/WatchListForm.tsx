@@ -59,7 +59,7 @@ export function WatchListForm() {
     navigate('/watchList');
   }
 
-  if (isLoading) return <div>Loading Watch List...</div>;
+  if (isLoading) return <div>Loading...</div>;
   if (error) {
     return (
       <div>
@@ -141,7 +141,9 @@ export function WatchListForm() {
                   <p>Delete</p>
                 </div>
                 <div className="columns-1 flex justify-center w-full bg-white rounded p-2">
-                  <p>Are you sure you want to delete this watch list item?</p>
+                  <p>
+                    Are you sure you want to delete this from your watch list?
+                  </p>
                 </div>
                 <div className="columns-1 flex justify-between w-full px-3">
                   <button

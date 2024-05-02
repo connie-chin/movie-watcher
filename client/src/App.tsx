@@ -8,7 +8,7 @@ import { WatchList } from './pages/WatchList';
 import { Routes, Route } from 'react-router-dom';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('');
+  const [activeTab, setActiveTab] = useState('Reviews');
 
   return (
     <>
