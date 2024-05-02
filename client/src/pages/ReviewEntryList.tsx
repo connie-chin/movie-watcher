@@ -12,6 +12,7 @@ export function ReviewEntryList() {
     async function load() {
       try {
         const reviewsList = await readReviews();
+        console.log('reviewlist', reviewsList);
         setReviewsList(reviewsList);
       } catch (err) {
         setError(err);
