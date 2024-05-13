@@ -94,7 +94,7 @@ export function ReviewEntryForm() {
             <div>
               <div className="columns-1 flex w-full justify-center pb-2 md:pt-4">
                 <label className="w-5/6 md:w-full">
-                  PhotoUrl:
+                  Movie Image Address:
                   <input
                     name="photoUrl"
                     type="text"

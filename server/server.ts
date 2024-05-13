@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars -- Remove when used */
 import 'dotenv/config';
-import express from 'express';
+import express, { response } from 'express';
 import pg from 'pg';
 import {
   ClientError,
