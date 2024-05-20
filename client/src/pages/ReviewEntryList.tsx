@@ -47,6 +47,8 @@ export function ReviewEntryList() {
               <ReviewCard key={review.reviewId} review={review} />
             ))}
           </ul>
+          <div>
+          </div>
         </div>
       </div>
     </div>
@@ -67,7 +69,7 @@ function ReviewCard({ review }: ReviewProps) {
     <li className="justify-between hover:scale-105">
       <Link
         to={`review/${review.reviewId}`}
-        className="columns-2 mb-4 flex flex-row rounded p-2 bg-[rgb(254,182,166)] h-24 sm:h-40 max-h-60">
+        className="columns-2 mb-4 flex flex-row rounded p-2 bg-[rgb(254,182,166)] h-24 sm:h-40 max-h-40 border-4 border-[rgb(176,212,192)] max-w-96">
         <div className="basis-1/3">
           <img
             className="rounded w-auto object-contain block ml-auto mr-auto aspect-auto h-20 sm:h-36 max-h-48"

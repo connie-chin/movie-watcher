@@ -116,7 +116,7 @@ export function WatchListForm() {
               </div>
             </div>
           </div>
-          <div className="columns-2 flex w-full block justify-between mt-72">
+          <div className="columns-2 flex w-full block justify-between mt-36">
             <div className="delete-button-container">
               {isEditing && (
                 <button

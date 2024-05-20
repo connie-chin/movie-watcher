@@ -76,7 +76,7 @@ export function ReviewEntryForm() {
   }
 
   return (
-    <div className="bg-amber-300 h-dvh w-full flex justify-center">
+    <div className="bg-amber-300 h-full w-full flex justify-center">
       <div className="w-5/6">
         <div className="columns-1 flex justify-between w-full text-2xl mt-8">
           <h2>{isEditing ? 'Edit Review' : 'New Review'}</h2>

@@ -63,7 +63,7 @@ function WatchListCard({ item }: watchListProps) {
   return (
     <li>
       <Link to={`/watchList/${item.watchListId}`}>
-        <div className="flex-row w-32 h-56 bg-[rgb(176,212,192)] p-2 rounded hover:scale-110">
+        <div className="flex-row w-32 h-[230px] bg-[rgb(176,212,192)] p-1.5 rounded hover:scale-110 border-4 border-[rgb(254,182,166)]">
           <div className="columns-1">
             <img
               className="h-44 object-contain rounded"
