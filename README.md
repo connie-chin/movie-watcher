@@ -1,5 +1,5 @@
 # Movie Watcher
-A full stack TypeScript solo project.
+A full stack TypeScript project.
 ## Why I built this
 This app was created for movie watchers who want to keep track of what they have already seen and want to see. 
 ### Technologies used
