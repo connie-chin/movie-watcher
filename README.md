@@ -23,15 +23,20 @@ http://movie-watcher-dev.us-west-1.elasticbeanstalk.com/
 - User can delete the watch list item
 #### Visual Representation
 - User can add
-<img width="1044" alt="Screenshot 2024-05-22 at 3 56 02 PM" src="https://github.com/connie-chin/movie-watcher/assets/155609517/a1b87833-3101-48e6-9441-cd2074f43255">
+<img width="698" alt="Screenshot 2024-05-22 at 4 11 36 PM" src="https://github.com/connie-chin/movie-watcher/assets/155609517/250f8da9-2a13-4c7f-a59f-111445b0f1d4">
+
+
 
 - User can view
-<img width="1038" alt="Screenshot 2024-05-22 at 4 01 22 PM" src="https://github.com/connie-chin/movie-watcher/assets/155609517/7e9ae5c8-0231-44e9-bbc3-cbae2a9b1973">
-<img width="986" alt="Screenshot 2024-05-22 at 4 07 10 PM" src="https://github.com/connie-chin/movie-watcher/assets/155609517/915c9c07-b39f-48cc-b98d-9ba2ad0c3a2c">
+<img width="695" alt="Screenshot 2024-05-22 at 4 08 45 PM" src="https://github.com/connie-chin/movie-watcher/assets/155609517/50ded552-73e0-4f9f-96d4-55d155fbb190">
+<img width="671" alt="Screenshot 2024-05-22 at 4 09 36 PM" src="https://github.com/connie-chin/movie-watcher/assets/155609517/305de966-033c-4cdc-a1f3-2d23cd67da90">
+
+
 
 
 - User can update/delete
-<img width="1035" alt="Screenshot 2024-05-22 at 3 57 11 PM" src="https://github.com/connie-chin/movie-watcher/assets/155609517/ff40e77b-97ac-4911-b218-9406c163236a">
+<img width="694" alt="Screenshot 2024-05-22 at 4 09 18 PM" src="https://github.com/connie-chin/movie-watcher/assets/155609517/43b895d0-ecf4-4976-92d1-fc4803f1f1ca">
+
 
 
 #### Features to come
