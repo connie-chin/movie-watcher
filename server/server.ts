@@ -147,6 +147,7 @@ app.delete('/api/reviews/:reviewId', async (req, res, next) => {
 });
 
 // watchLists
+
 app.post('/api/watchLists', async (req, res, next) => {
   // create
   const userId = 1;

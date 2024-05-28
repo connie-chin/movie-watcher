@@ -72,10 +72,12 @@ export async function deleteReview(reviewId: number): Promise<void> {
   }
 }
 
+//watchList section
+
 export async function addWatchListItem(
   item: WatchListItem
 ): Promise<WatchListItem> {
-  //creating watch list item
+  //creating watchlist item
   const req = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

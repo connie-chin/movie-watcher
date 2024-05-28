@@ -34,6 +34,7 @@ export function WatchList() {
   return (
     <div className="flex flex-wrap justify-center bg-amber-300 h-dvh overflow-auto">
       <div className="">
+        {/* <div className="row"> */}
         <div className="columns-1 flex justify-center mb-4">
           <Link
             className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4 hover:scale-110"
@@ -41,6 +42,7 @@ export function WatchList() {
             +
           </Link>
         </div>
+        {/* </div> */}
         <div className="w-screen p-6 flex">
           <ul className=" flex flex-wrap w-full gap-4">
             {watchList.map((item) => (
@@ -66,6 +68,7 @@ function WatchListCard({ item }: watchListProps) {
             <img
               className="h-44 object-contain rounded"
               src={item.photoUrl}
+              alt=""
             />
           </div>
           <div className="text-center h-11 block w-28 overflow-y-scroll">
