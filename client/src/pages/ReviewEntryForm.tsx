@@ -153,7 +153,6 @@ export function ReviewEntryForm() {
                 required
                 defaultValue={review?.review ?? ''}
                 className="border-red-900 block px-2 py-1 rounded mt-2 w-full"
-                // cols={30}
                 rows={8}
               />
             </label>

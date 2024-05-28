@@ -78,7 +78,6 @@ export function WatchListForm() {
         <div className="columns-1 flex justify-between w-full text-2xl mt-8">
           <h2>{isEditing ? 'Edit Watch List Item' : 'New Watch List Item'}</h2>
         </div>
-
         <form onSubmit={handleSubmit}>
           <div className="md:columns-2">
             <div className="columns-1 flex justify-center mb-4 mt-4">
