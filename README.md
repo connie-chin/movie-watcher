@@ -48,7 +48,7 @@ http://movie-watcher-dev.us-west-1.elasticbeanstalk.com/
 - NPM
 #### Getting Started
 1. Clone the repo
- ```git clone https://github.com/NateNobleza/runner-up.git```
+ ```git clone https://github.com/connie-chin/movie-watcher.git```
 2. Install all the dependancies with NPM
 ```npm install```
 3. Import the database to PostgreSQL
