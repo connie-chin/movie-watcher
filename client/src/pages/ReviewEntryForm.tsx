@@ -39,14 +39,18 @@ export function ReviewEntryForm() {
     if (isEditing) load(Number(reviewId));
   }, [reviewId, isEditing]);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const newReview = Object.fromEntries(formData) as unknown as MovieReview;
-    if (isEditing) {
-      updateReview({ ...review, ...newReview });
-    } else {
-      addReview(newReview);
+    try {
+      if (isEditing) {
+        await updateReview({ ...review, ...newReview });
+      } else {
+        await addReview(newReview);
+      }
+    } catch (err) {
+      setError(err);
     }
     navigate('/');
   }
@@ -89,7 +93,7 @@ export function ReviewEntryForm() {
             <div>
               <div className="columns-1 flex w-full justify-center pb-2 md:pt-4">
                 <label className="w-5/6 md:w-full">
-                  PhotoUrl:
+                  Movie Image Address:
                   <input
                     name="photoUrl"
                     type="text"

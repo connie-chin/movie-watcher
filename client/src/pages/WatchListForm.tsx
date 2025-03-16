@@ -38,19 +38,22 @@ export function WatchListForm() {
     if (isEditing) load(Number(watchListId));
   }, [watchListId, isEditing]);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event?.preventDefault();
     const formData = new FormData(event?.currentTarget);
     const newWatchList = Object.fromEntries(
       formData
     ) as unknown as WatchListItem;
-    if (isEditing) {
-      updateWatchListItem({ ...watchListItem, ...newWatchList });
-    } else {
-      addWatchListItem(newWatchList);
+    try {
+      if (isEditing) {
+        await updateWatchListItem({ ...watchListItem, ...newWatchList });
+      } else {
+        await addWatchListItem(newWatchList);
+      }
+    } catch (err) {
+      setError(err);
     }
     navigate('/watchList');
-    // console.log('title', title);
   }
 
   function handleDelete() {

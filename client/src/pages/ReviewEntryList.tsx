@@ -45,7 +45,6 @@ export function ReviewEntryList() {
           Add A Review
         </Link>
       </div>
-
       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {reviewsList.map((review) => (
           <ReviewCard key={review.reviewId} review={review} />
@@ -65,7 +64,7 @@ function ReviewCard({ review }: ReviewProps) {
   ));
 
   return (
-    <li className="transition transform hover:scale-105">
+       <li className="transition transform hover:scale-105">
       <Link to={`/review/${review.reviewId}`}>
         <div className="bg-white rounded-lg shadow-md overflow-hidden flex">
           <div className="min-h-[196px] h-full w-1/3 flex items-center justify-center overflow-hidden">
