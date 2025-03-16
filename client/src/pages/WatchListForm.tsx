@@ -73,7 +73,7 @@ export function WatchListForm() {
   }
 
   return (
-    <div className="bg-amber-300 h-dvh flex w-full justify-center">
+    <div className="bg-[rgb(36,85,103)] flex w-full justify-center py-8">
       <div className="w-5/6">
         <div className="columns-1 flex justify-between w-full text-2xl mt-8">
           <h2>{isEditing ? 'Edit Watch List Item' : 'New Watch List Item'}</h2>
@@ -91,7 +91,7 @@ export function WatchListForm() {
             <div className="flex-column md:pt-4">
               <div className="columns-1 flex w-full justify-center pb-2">
                 <label className="w-5/6 md:w-full">
-                  Movie Image Address:
+                  PhotoUrl:
                   <input
                     name="photoUrl"
                     type="text"
@@ -116,7 +116,7 @@ export function WatchListForm() {
               </div>
             </div>
           </div>
-          <div className="columns-2 flex w-full block justify-between mt-36">
+          <div className="columns-2 flex w-full block justify-between mt-4">
             <div className="delete-button-container">
               {isEditing && (
                 <button
@@ -127,7 +127,7 @@ export function WatchListForm() {
                 </button>
               )}
             </div>
-            <div className="bg-amber-300">
+            <div className="bg-[rgb(36,85,103)]">
               <button className="bg-emerald-500 rounded text-white px-2 m-2 hover:scale-110">
                 Save
               </button>
