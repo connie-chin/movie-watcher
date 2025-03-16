@@ -72,12 +72,11 @@ export function ReviewEntryForm() {
   }
 
   return (
-    <div className="bg-amber-300 h-dvh w-full flex justify-center">
-      <div className="w-5/6">
-        <div className="columns-1 flex justify-between w-full text-2xl mt-8">
+    <div className="bg-[rgb(36,85,103)] w-full flex justify-center py-8">
+      <div className="w-5/6 min-h-screen">
+        <div className="flex justify-between w-full text-2xl mt-8 text-black">
           <h2>{isEditing ? 'Edit Review' : 'New Review'}</h2>
         </div>
-
         <form onSubmit={handleSubmit}>
           <div className="md:columns-2 md:flex-col md:content-center">
             <div className="columns-1 flex justify-center mb-4 mt-4">
@@ -131,7 +130,7 @@ export function ReviewEntryForm() {
                           {starIndex < currentRating ? (
                             <FaStar />
                           ) : (
-                            <FaStar className="text-sky-500" />
+                            <FaStar className="text-yellow-500" />
                           )}
                         </label>
                       );
@@ -154,7 +153,7 @@ export function ReviewEntryForm() {
               />
             </label>
           </div>
-          <div className="columns-2 flex w-full block justify-between">
+          <div className="columns-2 flex w-full block justify-between bg-[rgb(36,85,103)] w-full">
             <div className="delete-button-container">
               {isEditing && (
                 <button
@@ -165,7 +164,7 @@ export function ReviewEntryForm() {
                 </button>
               )}
             </div>
-            <div className="bg-amber-300">
+            <div className="bg-[rgb(36,85,103)]">
               <button className="bg-emerald-500 rounded text-white px-2 m-2 hover:scale-110">
                 Save
               </button>

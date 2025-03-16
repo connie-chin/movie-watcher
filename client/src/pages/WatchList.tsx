@@ -5,13 +5,13 @@ import { useState, useEffect } from 'react';
 export function WatchList() {
   const [watchList, setWatchList] = useState<WatchListItem[]>([]);
   const [error, setError] = useState<unknown>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
       try {
-        const watchListList = await readWatchListItems();
-        setWatchList(watchListList);
+        const items = await readWatchListItems();
+        setWatchList(items);
       } catch (err) {
         setError(err);
       } finally {
@@ -21,58 +21,57 @@ export function WatchList() {
     load();
   }, []);
 
-  if (isLoading) return <div>Loading Watch List...</div>;
-  if (error) {
+  if (isLoading)
     return (
-      <div>
-        Error Loading Watch List:{' '}
+      <div className="flex justify-center items-center h-full">
+        Loading Watch List...
+      </div>
+    );
+  if (error)
+    return (
+      <div className="text-center text-red-500">
+        Error loading watch list:{' '}
         {error instanceof Error ? error.message : 'Unknown error'}
       </div>
     );
-  }
 
   return (
-    <div className="flex flex-wrap justify-center bg-amber-300 h-dvh overflow-auto">
-      <div className="">
-        {/* <div className="row"> */}
-        <div className="columns-1 flex justify-center mb-4">
-          <Link
-            className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4 hover:scale-110"
-            to="/watchList/new">
-            +
-          </Link>
-        </div>
-        {/* </div> */}
-        <div className="w-screen p-6 flex">
-          <ul className=" flex flex-wrap w-full gap-4">
-            {watchList.map((item) => (
-              <WatchListCard key={item.watchListId} item={item} />
-            ))}
-          </ul>
-        </div>
+    <div className="mx-auto bg-[rgb(36,85,103)] min-h-screen p-6">
+      <div className="text-center mb-6">
+        <Link
+          to="/watchList/new"
+          className="bg-white text-black font-bold py-2 px-6 rounded shadow hover:scale-105 transition">
+          Add To Watch List
+        </Link>
       </div>
+
+      <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        {watchList.map((item) => (
+          <WatchListCard key={item.watchListId} item={item} />
+        ))}
+      </ul>
     </div>
   );
 }
 
-type watchListProps = {
+type WatchListProps = {
   item: WatchListItem;
 };
 
-function WatchListCard({ item }: watchListProps) {
+function WatchListCard({ item }: WatchListProps) {
   return (
-    <li>
+    <li className="transition transform hover:scale-105">
       <Link to={`/watchList/${item.watchListId}`}>
-        <div className="flex-row w-32 h-56 bg-[rgb(176,212,192)] p-2 rounded hover:scale-110">
-          <div className="columns-1">
-            <img
-              className="h-44 object-contain rounded"
-              src={item.photoUrl}
-              alt=""
-            />
-          </div>
-          <div className="text-center h-11 block w-28 overflow-y-scroll">
-            <p className="capitalize text-sm">{item.title}</p>
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <img
+            src={item.photoUrl}
+            alt={item.title}
+            className="h-72 w-full object-cover"
+          />
+          <div className="p-2 text-center">
+            <p className="text-sm font-medium text-gray-800 capitalize truncate">
+              {item.title}
+            </p>
           </div>
         </div>
       </Link>

@@ -5,14 +5,14 @@ import { FaStar } from 'react-icons/fa';
 
 export function ReviewEntryList() {
   const [reviewsList, setReviewsList] = useState<MovieReview[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<unknown>();
 
   useEffect(() => {
     async function load() {
       try {
-        const reviewsList = await readReviews();
-        setReviewsList(reviewsList);
+        const reviews = await readReviews();
+        setReviewsList(reviews);
       } catch (err) {
         setError(err);
       } finally {
@@ -22,33 +22,35 @@ export function ReviewEntryList() {
     load();
   }, []);
 
-  if (isLoading) return <div>Loading Reviews...</div>;
-  if (error) {
+  if (isLoading)
     return (
-      <div>
-        Error Loading Reviews:{' '}
+      <div className="flex justify-center items-center h-full">
+        Loading Reviews...
+      </div>
+    );
+  if (error)
+    return (
+      <div className="text-center text-red-500">
+        Error loading reviews:{' '}
         {error instanceof Error ? error.message : 'Unknown error'}
       </div>
     );
-  }
+
   return (
-    <div className="mx-auto bg-amber-300 h-dvh overflow-auto">
-      <div className="columns-1 mb-4 flex justify-center">
+    <div className="mx-auto bg-[rgb(36,85,103)] min-h-screen p-6">
+      <div className="text-center mb-6">
         <Link
           to="/review/new"
-          className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4 hover:scale-110">
-          +
+          className="bg-white text-black font-bold py-2 px-6 rounded shadow hover:scale-105 transition">
+          Add A Review
         </Link>
       </div>
-      <div className="flex justify-center">
-        <div className="columns-2 gap-x-6 py-0 m-8">
-          <ul className="w-full flex-col">
-            {reviewsList.map((review) => (
-              <ReviewCard key={review.reviewId} review={review} />
-            ))}
-          </ul>
-        </div>
-      </div>
+
+      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {reviewsList.map((review) => (
+          <ReviewCard key={review.reviewId} review={review} />
+        ))}
+      </ul>
     </div>
   );
 }
@@ -58,37 +60,36 @@ type ReviewProps = {
 };
 
 function ReviewCard({ review }: ReviewProps) {
-  const stars: number[] = [];
-  const numberOfStars = Number(review.rating);
-  for (let i = 0; i < numberOfStars; i++) {
-    stars.push(i);
-  }
+  const stars = Array.from({ length: Number(review.rating) }, (_, index) => (
+    <FaStar key={index} className="text-yellow-500 text-lg sm:text-xl" />
+  ));
+
   return (
-    <li className="justify-between hover:scale-105">
-      <Link
-        to={`review/${review.reviewId}`}
-        className="columns-2 mb-4 flex flex-row rounded p-2 bg-[rgb(254,182,166)] h-24 sm:h-40 max-h-60">
-        <div className="basis-1/3">
-          <img
-            className="rounded w-auto object-contain block ml-auto mr-auto aspect-auto h-20 sm:h-36 max-h-48"
-            src={review.photoUrl}
-            alt=""
-          />
-        </div>
-        <div className="basis-2/3 text-start sm:pl-2">
-          <div className="font-bold text-xl h-7 overflow-y-scroll">
-            <h3 className="capitalize">{review.title}</h3>
+    <li className="transition transform hover:scale-105">
+      <Link to={`/review/${review.reviewId}`}>
+        <div className="bg-white rounded-lg shadow-md overflow-hidden flex">
+          <div className="min-h-[196px] h-full w-1/3 flex items-center justify-center overflow-hidden">
+            <img
+              src={review.photoUrl}
+              alt={review.title}
+              className="h-full object-cover"
+            />
           </div>
-          <div className="flex">
-            {stars.map((index) => (
-              <FaStar
-                key={index}
-                className="text-sky-500 text-lg sm:text-xl my-1"
-              />
-            ))}
-          </div>
-          <div className="hidden sm:block overflow-y-scroll h-[60%]">
-            <p className="text-sm">{review.review}</p>
+          <div className="p-4 flex flex-col justify-between w-2/3">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 capitalize truncate">
+                {review.title}
+              </h3>
+              <div className="flex items-center mt-2">{stars}</div>
+              <p className="text-sm text-gray-600 mt-2 sm:block overflow-hidden border-2 h-32 rounded p-1">
+                {review.review}
+              </p>
+            </div>
+            <Link
+              to={`/review/${review.reviewId}`}
+              className="text-indigo-600 hover:underline text-sm mt-2">
+              Read Full Review →
+            </Link>
           </div>
         </div>
       </Link>
